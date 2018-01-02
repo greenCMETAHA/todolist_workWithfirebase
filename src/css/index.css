@@ -1,0 +1,99 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+legend{
+  text-align: left;
+}
+
+h1, p {
+  font-family: Lato;
+}
+
+table, td, tr {
+  border: 1px solid; 
+  border-color: black;
+}
+
+tr.activeTR {
+  background-color: rgb(232,235,236) 
+  
+}
+
+td.activeTD {
+  background-color: rgb(232,235,236) 
+  
+}
+
+td.currentDayTD {
+  background-color: rgb(102, 204, 255)
+  
+}
+
+div.records {
+ 
+  align-content: left;
+  text-align: left;
+  vertical-align: bottom;  
+}
+
+div.calendarCell {
+  align-content: right;
+  text-align: right;
+  vertical-align: top;
+  height: 120px;
+  width: 120px;
+  background-color: rgb(232,235,236) 
+
+   
+  
+  }
+
+div.calendarHead {
+  align-content: center;
+  display:block;  margin:0 auto;
+  
+  }  
+
+div.monthDiv {
+  display:block;  margin:0 auto;
+  width: 300px;
+  
+  }      
+
+div.calendarDay {
+  align-content: right;
+  text-align: right;
+  vertical-align: top;
+  }
+
+span.buttonsCalendarCenter{
+  align-content: center;
+  text-align: center;
+  vertical-align: center;
+  width: 60%;
+  display: table-cell;
+}
+
+span.buttonsCalendarLeft{
+  align-content: center;
+  text-align: left;
+  vertical-align: center;
+  width: 20%;
+  display: table-cell;
+}
+
+span.buttonsCalendarRight{
+  align-content: center;
+  text-align: right;
+  vertical-align: center;
+  width: 20%; 
+  display: table-cell; 
+}
+
+h6.sign{
+  text-align: right;
+}
+
