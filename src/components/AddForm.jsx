@@ -43,14 +43,8 @@ class AddForm extends Component{
 
 
 function mapStateToProps (state) {
-    //debugger;
     let result={};
-    //if (result.editTask && state.currentTask>=0){
-    //    result.currentTask=state.tasks[state.currentTask];
-    //}else{
-        result.currentTask=new Record(false,0,"",1,"",new Date());
-    //}
-
+    result.currentTask=new Record(false,0,"",1,"",new Date());
 
     return result;
   }

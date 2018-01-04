@@ -1,10 +1,10 @@
-//import * as firebaseAPI from './apiWrappersFirebase';
+import * as firebaseAPI from './apiWrappersFirebase';
 //БД надо подключить в index.html
 
 import * as localStorageAPI from './apiWrappersLocalStorage';
 
 const MODE_LOCALSTORAGE="LocalStorage", MODE_FIREBASE="Firebase"; 
-const MODE=MODE_LOCALSTORAGE;    //=MODE_FIREBASE   //поменять!!!!!!!!!!!!!!!!!!!!!!!!
+const MODE=MODE_FIREBASE; //MODE_LOCALSTORAGE   //поменять!!!!!!!!!!!!!!!!!!!!!!!!
 
 //------------------------------------------ Importances ------------------------------------------
 // Я сохраняю список важностей в БД. Это не особо важно, просто так привык. Нужно или сделать заглушку, 
@@ -22,10 +22,12 @@ export const saveImportance=(id, name, parent=false)=>{
 }
 
 export const getImportances=()=>{
+    console.log("---aaa");
     if (MODE===MODE_LOCALSTORAGE){
         return localStorageAPI.getImportances();
     }else{
-        //return firebaseAPI.getImportances();
+        console.log("---aaa222");        
+        return firebaseAPI.getImportances();
     }    
   
 }
@@ -42,18 +44,22 @@ export const getImportanceById=(id)=>{
     if (MODE===MODE_LOCALSTORAGE){
         return localStorageAPI.getImportanceById(id);
     }else{
-        //return firebaseAPI.getImportanceById(id);
+        return firebaseAPI.getImportanceById(id);
     } 
 
 }
 
 //----------------------------------------  Tasks ----------------------------------------
 // record - объект типа Record, бин для task, лежит здесь: ../containers/Record'
+
+//new Record(статус (чекбокс, булево),id (число),title (строка),importance (new Importance(id, name), сработает, если цифру от 1 до 5 прислать),description(текст),дата(new Date()))
+
 //Часть методов здесь не используется, т.к. фильтрацию и сортировки я делаю прямо в ListForm
 //, (так проще для учебного проекта, хотя можно было прокинуть фильтры через экшн) 
 //для для нормальной БД, где данные выбираются по условию, они подошли бы очень хорошо 
 
 export const getCurrentTask=()=>{
+
     if (MODE===MODE_LOCALSTORAGE){
         return localStorageAPI.getCurrentTask();
     }else{
@@ -70,10 +76,12 @@ export const setCurrentTask=(value=0)=>{
 }
 
 export const getTasks=(forDate=undefined)=>{
+    console.log("+++aaa");    
     if (MODE===MODE_LOCALSTORAGE){
         return localStorageAPI.getTasks(forDate);
     }else{
-        //return firebaseAPI.getTasks(forDate);
+        console.log("+++aaa222");        
+        return firebaseAPI.getTasks(forDate);
     } 
 }
 

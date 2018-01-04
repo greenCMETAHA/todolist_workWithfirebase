@@ -12,7 +12,6 @@ class InsertField extends Component{
     render(){
         this.record=this.props.record;
         let taskDate=setStringDate(this.record.getDateAsObject());
-        console.log("taskdate   "+ taskDate);
       return (
         <div>
             <input id="id" hidden defaultValue={this.record.getId()} />

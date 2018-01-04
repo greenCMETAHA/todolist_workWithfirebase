@@ -16,7 +16,7 @@ class App extends Component {
         <AddEditForm />
         <FilterForm />
         <ListForm />
-        <Calendar />
+        <Calendar / > 
       </div>
     );
   }

@@ -10,7 +10,7 @@ const DEFAULT_LIST = [];
 
 
 const tasks = (state = DEFAULT_LIST, action) => {
-
+    console.log("reducer "+action);
   switch (action.type) {
     case ADD_TASK:{
       saveTask(action.record,true);

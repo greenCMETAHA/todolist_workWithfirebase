@@ -63,7 +63,11 @@ export class Record{
     }
 
     getImportance(){
-      return this.importance.getId();
+      let result=1;
+      if (typeof(this.importance)!=="string"){
+        result=this.importance.getId();
+      }
+      return result;
     }
     
     getDescription(){

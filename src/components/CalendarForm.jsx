@@ -65,6 +65,7 @@ class Calendar extends Component{
     }    
 
     render(){
+        console.log("list form");
         this.records=this.props.tasks;
        // this.filter=this.props.currentTask;  //не стал этого делать. Если надо - скопипастить из ListForm фильтр и сорт
        this.calendarMonth=this.props.calendar;
@@ -120,6 +121,7 @@ class Calendar extends Component{
 
 class Day{
     constructor(key="",records=[],day=0){
+        
         this.records=records;
         this.day=day;
         this.key=key;
