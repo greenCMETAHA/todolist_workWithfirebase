@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
+      <script>
+        // Initialize Firebase
+        var config = {
+          apiKey: "AIzaSyACRHNCmyHpF_61PxbjbWShMstUIlHKJZo",
+          authDomain: "js-courses-vasilchenko-2017.firebaseapp.com",
+          databaseURL: "https://js-courses-vasilchenko-2017.firebaseio.com",
+          projectId: "js-courses-vasilchenko-2017",
+          storageBucket: "js-courses-vasilchenko-2017.appspot.com",  
+          messagingSenderId: "247236283842"
+        };
+        var defaultApp = firebase.initializeApp(config);
+        console.log(defaultApp.name);  // 
+        var db=null;
+        var storeObject=123;
+      </script>
+    
+      <script src="https://cdn.firebase.com/libs/firebaseui/1.0.0/firebaseui.js"></script>  
+      <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/1.0.0/firebaseui.css" />  
+      <script type="text/javascript">  
+        var uiConfig = {  
+        signInSuccessUrl: 'index.html',  
+        signInOptions: [  
+        // Указываем провайдеров для Firebase Аутентификации
+        firebase.auth.GoogleAuthProvider.PROVIDER_ID //,  
+        //firebase.auth.EmailAuthProvider.PROVIDER_ID  
+        ],  
+        // Здесь вы можете специфировать условия к использованию, которые будут показаны при виджете 
+        tosUrl: '<your-tos-url>'  
+        };  
+        // Инициализирум FirebaseUI виджет   
+        var ui = new firebaseui.auth.AuthUI(firebase.auth());  
+        // Для начала методы мы подождем пока html полностью загрузиться
+        ui.start('#firebaseui-auth-container', uiConfig);  
+      </script>  
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="theme-color" content="#000000">
+
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
+    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
+    <link rel="stylesheet" href=".css/index.css">
+ 
+    <title>React + resux+ localStorage +fireBase App</title>
+  </head>
+  <body>
+    <div class="sign">
+    	<h1 align="center">Firebase Аутентификация для Web</h1>  
+      <div id="firebaseui-auth-container"></div>  
+    </div>
+    <div id="view">
+      <div id="root">      </div>
+    </div>
+    <br><h6 class="sign"> React+Redux+localStorage app by greenCMETAHA <h6>
+   </body>
+</html>
