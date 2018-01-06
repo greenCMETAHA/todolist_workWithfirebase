@@ -1,8 +1,7 @@
 export const ADD_TASK = "ADD_TASK", SELECT_TASK="SELECT_TASK", EDIT_TASK="EDIT_TASK"
-    , DELETE_TASK="DELETE_TASK", DELETE_ALL="DELETE_ALL"
-    , CHANGE_STATUS_TASK="CHANGE_STATUS_TASK", GET_FILTER="GET_FILTER"
+    , DELETE_TASK="DELETE_TASK", DELETE_ALL="DELETE_ALL", SAVE_TASK="SAVE_TASK", CHANGE_STATUS_TASK="CHANGE_STATUS_TASK", GET_FILTER="GET_FILTER"
     , GET_CURRENT_LINE="GET_CURRENT_LINE", CHANGE_CALENDAR="CHANGE_CALENDAR",
-    CHANGE_SORT="CHANGE_SORT" ;
+    CHANGE_SORT="CHANGE_SORT", GET_LIST="GET_LIST", GET_IMPORTANCE="GET_IMPORTANCE", GET_TASK="GET_TASK", GET_IMPORTANCES="GET_IMPORTANCES";
 
 
 
@@ -16,10 +15,16 @@ export const addTask = (record) => ({
     record
   })
 
-  export const editTask = (record) => ({
+export const editTask = (value) => ({
     type: EDIT_TASK,
-    record
+    value
   })  
+
+  export const saveTask = (record, mode) => ({  //mode: true - add, false -edit
+    type: SAVE_TASK,
+    record,
+    mode
+  })    
 
 export const deleteTask = (id) => ({
     type: DELETE_TASK,
@@ -59,6 +64,25 @@ export const changeSort = (field, order) => ({
   })  
 
   
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+export const getImportance = (value) => ({
+  type: GET_IMPORTANCE,
+  value
+}) 
 
+export const getImportances = (value) => ({
+  type: GET_IMPORTANCES,
+  value
+})
 
+export const getList = (value) => ({
+  type: GET_LIST,
+  value
+
+})  
+
+export const getTask = (value) => ({
+  type: GET_TASK,
+  value
+}) 
 

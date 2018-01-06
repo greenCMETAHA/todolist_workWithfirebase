@@ -3,7 +3,7 @@ import {Record} from '../containers/Record';
 import InsertFields from './InsertFields';
 import { connect } from 'react-redux';
 //import { bindActionCreators } from 'redux'
-import  {addTask} from '../actions';
+import  {addTask, saveTask} from '../actions';
 
 class AddForm extends Component{
     constructor(props){
@@ -23,7 +23,7 @@ class AddForm extends Component{
             ,ev.target[5].value //description//date
             ,(ev.target[4].value===""?new Date(): ev.target[4].value));  
 
-          this.props.addTask(record);
+          this.props.saveTask(record,true);
         ev.target.reset();
       }
 
@@ -51,4 +51,4 @@ function mapStateToProps (state) {
 
 
 
-export default connect (mapStateToProps,{addTask})(AddForm);
+export default connect (mapStateToProps,{addTask,saveTask})(AddForm);

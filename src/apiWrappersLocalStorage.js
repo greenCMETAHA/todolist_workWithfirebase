@@ -2,7 +2,6 @@ import {Record,Importance} from './containers/Record';
 //import {Importance} from './record';
 
 const pathLocalStorage="ToDoList_Vasilchenko_react_redux_11";
-//var db = defaultApp.database();	
 
 //------------------------------------------ Importances ------------------------------------------
 

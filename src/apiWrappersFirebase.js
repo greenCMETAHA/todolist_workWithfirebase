@@ -1,7 +1,13 @@
 import {Record,Importance} from './containers/Record';
 import {firebase,database} from './firebase';
 import firebaseAPI from 'firebase';
+//import {dispatch} from 'redux';
+//import { connect } from 'react-redux';
+import  {getList, getTask,  getImportances} from './actions';  //getImportance,
+import {store} from './index';
+import {getStringDateForFirebase, setStringDateForFirebase} from './utils';
 
+let db;
 
 function getDB(){
  
@@ -18,38 +24,35 @@ export const saveImportance=(id, name, parent=false)=>{
     }
 }
 
-export const getImportances=()=>{
+export const getImportancesFirebase=()=>{
     let result = [];
+
     db=getDB();
-    console.log("---");
-    console.log(db);
     if (db){
         console.log(db);
         let messagesRef = db.ref('importance');
         messagesRef.off();
 
-        console.log("---111");        
-    
         messagesRef.on('value', function(data) { //так возвратит все значения
-            console.log("---222");
+            result=[];
             var val = data.val(); //data.key
             for (let index = 0; index < val.length; index++) {
                 const element = val[index];
                 if (element){
-                    console.log("---333");
-                    result.push(new Importance(index, element));
+                    result.push(new Importance(index, element.name));
                 }
             }
-        });
+            store.dispatch(getImportances(result));
+            messagesRef.off();
+        },this);
     }
-    console.log("---444");
   
     return result;
 }
 
 export const getImportanceById=(id)=>{
-    let result = "";
-    db=getDB();
+    let result = new Importance(id,"Не важно");
+   /* db=getDB();
     if (db){    
         let messagesRef = db.ref('importance/'+id);
         messagesRef.off();
@@ -59,7 +62,12 @@ export const getImportanceById=(id)=>{
 
             return result;
         });
+    } */
+    let storeObject = store.getState();
+    if (storeObject){
+        result = storeObject["importances"][id-1]||result;
     }
+
     return result;
 }
 
@@ -68,36 +76,37 @@ export const getImportanceById=(id)=>{
 
 export const getTasks=(forDate=undefined)=>{
     let result=[];
-    console.log("+++111");
-    db=getDB();
-
+    console.log(3);
     if (db){
         let messagesRef = db.ref('tasks');
         messagesRef.off();
-        console.log("+++222");
-    
+        console.log(4);
+   
         messagesRef.on('value', function(data) { //так возвратит все значения
+            result=[];
             var val = data.val(); //data.key
-            console.log("+++333");
+            console.log(5);
             for (let key in val) {
                 const element = val[key];
                 if (element){
-                    let record=new Record(element.done,key,element.title,element.importance,element.description,element.date);
-                    console.log("+++444");
+                    console.log(6);
+
+                    let record=new Record(element.done,key,element.title
+                            ,getImportanceById(element.importance),element.description,getStringDateForFirebase(element.date));
                     if (checkMonthForTask(record,forDate)){  
-                        console.log("+++555");
                         result.push(record);
                     }
                 }
             }
-            console.log("+++666");
-            return result;
-        });  
+            console.log(7);
+            console.log(getList);
+            store.dispatch(getList(result));
+            messagesRef.off();
+        },this);  
     }  
-    console.log("+++777");
+
     return result;
 }
-
 
 export const getTaskById=(id=undefined)=>{
     let result=null;
@@ -108,19 +117,20 @@ export const getTaskById=(id=undefined)=>{
         messagesRef.off();
 
         messagesRef.once('value').then(element=>{
-            let record=null;
             element=element.val();
             if (element!=null){
-                result = new Record(element.done,element.id,element.title,element.importance,element.description,element.date);
+                result = new Record(element.done,element.id,element.title
+                        ,getImportanceById(element.importance),element.description,getStringDateForFirebase(element.date));
             }
 
-            return result;
+            store.dispatch(getTask(result));
+            messagesRef.off();
         });
     }
 
     return result;
 }
-
+/*
 export const getCompletedTasks=(forDate=undefined)=>{
     let result=getTasksByFieldDone(true, forDate);
  
@@ -133,39 +143,45 @@ export const getUncompletedTasks=(forDate=undefined)=>{
 
     return result;  
 }
-
+*/
 
 export const saveTask=(record,isNew=false)=>{   //record - объект типа Record
     db=getDB();
     if (db){
+        let json=record.toJSON();
+        json.importance=record.getImportance();
+        json.date=setStringDateForFirebase(record.getDateAsObject());
         if (isNew){
-            db.ref("tasks").push(record.toJSON())
+            console.log(1);
+            db.ref("tasks").push(json);
+            console.log(2)
         }else{
-            db.ref("tasks/"+record.getId()).set(record.toJSON());
+            db.ref("tasks/"+record.getId()).set(json);
         }
     }
+ //   getTasks();
 
 }
 
 export const deleteTaskById=(id=undefined)=>{
-    let result=true;
     db=getDB();
     if (db){
 
         let messagesRef = db.ref('tasks/'+id).remove();
         console.log(messagesRef);
     }
-
-    return result;
+ //   getTasks();
 }
 
 export const deleteTasks=()=>{
     db.ref('tasks').remove();
+
+ //   getTasks();
 }
 
 //--------------------------------------Доп. функции ------------------------------------------
-
-function getTasksByFieldDone(doneValue, forDate) {
+/*
+export const getTasksByFieldDone = function(doneValue, forDate){
     let result=[];
 
     db=getDB();
@@ -179,21 +195,22 @@ function getTasksByFieldDone(doneValue, forDate) {
             for (let key in val) {
                 const element = val[key];
                 if (element){
-                    let record=new Record(element.done,key,element.title,element.importance,element.description,element.date);
+                    let record=new Record(element.done,key,element.title
+                            ,getImportanceById(element.importance),element.description,getStringDateForFirebase(element.date));
 
                     if (checkMonthForTask(record,forDate)){  
                         result.push(record);
                     }
                 }
             }
-
-            return result;
+            store.dispatch(getTask(result));
+            //return result;
         });  
     }
      
     return result;
 }
-
+*/
 function checkMonthForTask(record,forDate) { //тогда в дате лежит дата месяца, по которому нужно сделать выборку
     let result=true;
 
@@ -207,7 +224,7 @@ function checkMonthForTask(record,forDate) { //тогда в дате лежит
 
     return result;
 }
-
+/*
 function addImportances() { //создадим таблицу важности, чтобы не хранить её в HLML
     
     saveImportance(1, "Не важно");
@@ -216,4 +233,4 @@ function addImportances() { //создадим таблицу важности, 
     saveImportance(4, "Очень важно");
     saveImportance(5, "Уссаться");
     
-}
+}*/

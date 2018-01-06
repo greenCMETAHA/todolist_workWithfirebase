@@ -27,7 +27,7 @@ export class Record{
 
       args[3]=args[3]===null?1:args[3]; //костыль, чтобы исправить ошибку
       this.importance=typeof (args[3])==="number"?getImportanceById(args[3])
-                                                :new Importance(args[3].id, args[3].name);
+                                                :new Importance(args[3].id_importance, args[3].name);
       this.description=args[4];
 
       if (typeof (args[5])==="string"){

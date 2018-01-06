@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {Record} from '../containers/Record';
 import InsertFields from './InsertFields';
 import { connect } from 'react-redux'
-import  {addTask,editTask} from '../actions';
+import  {addTask,editTask, saveTask} from '../actions';
 
 class EditForm extends Component{
     constructor(props){
@@ -15,13 +15,15 @@ class EditForm extends Component{
 
     editTask=(ev)=>{
         let oldId=+ev.target[1].value;
+        oldId=oldId!==NaN?ev.target[1].value:oldId; //в localStore я сохранял числовое значение. В firebase - строка.
         let record=new Record(this.record.getStatus()
             , (oldId===0?Math.ceil((Math.random()*10)+(Math.random()+10)*36):oldId)//id
             ,ev.target[2].value  //title
             ,+ev.target[3].value //importance
             ,ev.target[5].value //description
             ,(ev.target[4].value===""?new Date(): ev.target[4].value));  //date
-        this.props.editTask(record);
+        this.props.saveTask(record,false);
+        this.props.editTask(false);
    
     }
 
@@ -32,7 +34,8 @@ class EditForm extends Component{
             ,+ev.target[3].value //importance
             ,ev.target[5].value //description
             ,(ev.target[4].value===""?new Date(): ev.target[4].value));  //date
-        this.props.addTask(record);
+        this.props.saveTask(record,true);
+        this.props.editTask(false);
         
 
     }
@@ -48,7 +51,7 @@ class EditForm extends Component{
     }
 
     render(){
-        this.record=this.props.currentTask;
+        this.record=this.props.currentTask || new Record(false,0,"",1,"",new Date());
         return (
             <form onSubmit={this.saveTask.bind(this)}>
                 <fieldset>
@@ -78,4 +81,4 @@ function mapStateToProps (state) {
 }
 
 
-export default connect (mapStateToProps,{addTask,editTask})(EditForm);
+export default connect (mapStateToProps,{addTask,editTask,saveTask})(EditForm);

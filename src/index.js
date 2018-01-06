@@ -6,7 +6,7 @@ import { Provider } from 'react-redux'
 import App from './components/App'
 import reducers from './reducers/reducers'
 
-import { createStore, applyMiddleware } from "redux";
+import { createStore, applyMiddleware, compose } from "redux";
 import logger from "./config/logger";
 import async from "./config/async";
 import {DEFAULT_FILTER_STRUCTURE, DEFAULT_SORT_STRUCTURE} from './containers/Record';
@@ -22,7 +22,12 @@ let initialState={
                     calendar: new Date(),
                     sort:DEFAULT_SORT_STRUCTURE
                 }
-const store = createStore(reducers, initialState, applyMiddleware(logger, async));
+const store = createStore(reducers
+    , initialState
+    , compose(
+        applyMiddleware(logger, async),
+        window.devToolsExtension ? window.devToolsExtension() : f => f
+      ));
 
 
 ReactDOM.render(
@@ -32,5 +37,8 @@ ReactDOM.render(
     document.getElementById('root')
 );
 
+export {
+    store
+  };
 
 registerServiceWorker();

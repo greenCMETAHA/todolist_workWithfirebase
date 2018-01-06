@@ -15,17 +15,18 @@
         var defaultApp = firebase.initializeApp(config);
         console.log(defaultApp.name);  // 
         var db=null;
+        var storeObject=123;
       </script>
     
       <script src="https://cdn.firebase.com/libs/firebaseui/1.0.0/firebaseui.js"></script>  
       <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/1.0.0/firebaseui.css" />  
       <script type="text/javascript">  
         var uiConfig = {  
-        signInSuccessUrl: 'view.html',  
+        signInSuccessUrl: 'index.html',  
         signInOptions: [  
         // Указываем провайдеров для Firebase Аутентификации
-        firebase.auth.GoogleAuthProvider.PROVIDER_ID,  
-        firebase.auth.EmailAuthProvider.PROVIDER_ID  
+        firebase.auth.GoogleAuthProvider.PROVIDER_ID //,  
+        //firebase.auth.EmailAuthProvider.PROVIDER_ID  
         ],  
         // Здесь вы можете специфировать условия к использованию, которые будут показаны при виджете 
         tosUrl: '<your-tos-url>'  

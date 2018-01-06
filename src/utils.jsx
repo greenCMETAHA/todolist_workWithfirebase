@@ -32,6 +32,27 @@ export const getStringDate = function (value="") {
   return result;
 }
 
+export const getStringDateForFirebase = function (value="") {
+    let result=new Date();
+    let arr=value.split(".");
+    if (arr.length>0){
+      result.setFullYear(+arr[2]);
+      result.setMonth(+arr[1]);
+      result.setDate(+arr[0]);
+    }
+    console.log("getStringDate fore Firebase---- "+result);
+    return result;
+  }
+
+  export const setStringDateForFirebase = function (value="") {
+    let result="";
+    result=value.getDate()+"."+value.getMonth()+"."+value.getFullYear();
+
+    console.log("setStringDate fore Firebase---- "+result);
+    return result;
+  }
+  
+
 export const chunk = (size, arr) => {
     var result = [];
     for (var i = 0; i < arr.length; i += size) {
